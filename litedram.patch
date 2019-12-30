@@ -1,0 +1,36 @@
+diff --git a/litedram/phy/dfi.py b/litedram/phy/dfi.py
+index 2948556..44bca0b 100644
+--- a/litedram/phy/dfi.py
++++ b/litedram/phy/dfi.py
+@@ -15,7 +15,7 @@ def phase_cmd_description(addressbits, bankbits, nranks):
+         ("cke",          nranks, DIR_M_TO_S),
+         ("odt",          nranks, DIR_M_TO_S),
+         ("reset_n",           1, DIR_M_TO_S),
+-        ("act_n",             1, DIR_M_TO_S)
++        #("act_n",             1, DIR_M_TO_S)
+     ]
+ 
+ 
+@@ -52,7 +52,7 @@ class Interface(Record):
+             p.cs_n.reset = (2**nranks-1)
+             p.ras_n.reset = 1
+             p.we_n.reset = 1
+-            p.act_n.reset = 1
++            #p.act_n.reset = 1
+ 
+     # Returns pairs (DFI-mandated signal name, Migen signal object)
+     def get_standard_names(self, m2s=True, s2m=True):
+@@ -85,11 +85,11 @@ class DDR4DFIMux(Module):
+             self.comb += [
+                 p_i.connect(p_o),
+                 If(~p_i.ras_n & p_i.cas_n & p_i.we_n,
+-                   p_o.act_n.eq(0),
++                   #p_o.act_n.eq(0),
+                    p_o.we_n.eq(p_i.address[14]),
+                    p_o.cas_n.eq(p_i.address[15]),
+                    p_o.ras_n.eq(p_i.address[16])
+                 ).Else(
+-                    p_o.act_n.eq(1),
++                    #p_o.act_n.eq(1),
+                 )
+             ]
