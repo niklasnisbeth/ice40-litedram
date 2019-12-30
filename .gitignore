@@ -1,0 +1,5 @@
+build
+.*swp
+__pycache__
+*pyc
+gateware/__pycache__
